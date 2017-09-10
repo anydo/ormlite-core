@@ -62,7 +62,11 @@ public class LocalLog implements Log {
 	private final Level level;
 
 	static {
-		InputStream stream = LocalLog.class.getResourceAsStream(LOCAL_LOG_PROPERTIES_FILE);
+		// InputStream stream = LocalLog.class.getResourceAsStream(LOCAL_LOG_PROPERTIES_FILE);
+		
+		// Not calling getResourceAsStream in Android because it's really slow, and we
+		// aren't using the logger anyway.
+		InputStream stream = null;
 		List<PatternLevel> levels = readLevelResourceFile(stream);
 		classLevels = levels;
 
