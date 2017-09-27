@@ -3,6 +3,7 @@ package com.j256.ormlite.table;
 import java.lang.reflect.Constructor;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
