@@ -136,11 +136,11 @@ public class TableInfo<T, ID> {
 			// build our alias map if we need it
 			Map<String, FieldType> map = new HashMap<String, FieldType>();
 			for (FieldType fieldType : fieldTypes) {
-				map.put(fieldType.getColumnName().toLowerCase(), fieldType);
+				map.put(lowerCaseEntityName(fieldType.getColumnName()), fieldType);
 			}
 			fieldNameMap = map;
 		}
-		FieldType fieldType = fieldNameMap.get(columnName.toLowerCase());
+		FieldType fieldType = fieldNameMap.get(lowerCaseEntityName(columnName));
 		// if column name is found, return it
 		if (fieldType != null) {
 			return fieldType;
@@ -153,6 +153,15 @@ public class TableInfo<T, ID> {
 			}
 		}
 		throw new IllegalArgumentException("Unknown column name '" + columnName + "' in table " + tableName);
+	}
+
+	private String lowerCaseEntityName(String columnName) {
+		/*
+ 		 * We are forcing the ENGLISH locale because of locale capitalizaton/lowercasing issues. In a couple of languages, the
+ 		 * capital version of many letters is a letter that is incompatible with many SQL libraries. For example, in
+ 		 * Turkish (Locale.forLanguageTag("tr-TR")), "I".toLowerCase() returns "ı" instead of "i".
+ 		 */
+		return columnName.toLowerCase(Locale.ENGLISH);
 	}
 
 	/**
